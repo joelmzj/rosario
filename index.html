@@ -18,7 +18,6 @@
     <div class="flex h-full min-h-screen flex-col md:flex-row">
       
       <!-- 1. BARRA LATERAL (LÍNEA DE VIDA - HITOS) -->
-      <!-- En Escritorio: Fijo a la izquierda | En Móvil: Drawer deslizante -->
       <aside 
         :class="menuAbierto ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
         class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-900 bg-slate-950/95 p-6 transition-transform duration-300 ease-in-out md:static md:z-0 md:bg-slate-950">
@@ -47,7 +46,7 @@
         </div>
       </aside>
 
-      <!-- Overlay para cerrar el menú en móviles al hacer click afuera -->
+      <!-- Overlay para móviles -->
       <div 
         x-show="menuAbierto" 
         @click="menuAbierto = false" 
@@ -63,7 +62,7 @@
       <!-- 2. CONTENIDO PRINCIPAL -->
       <main class="flex flex-1 flex-col h-full overflow-y-auto">
         
-        <!-- CABECERA DE NAVEGACIÓN -->
+        <!-- CABECERA -->
         <header class="sticky top-0 z-30 flex items-center justify-between border-b border-slate-900 bg-slate-950/80 px-6 py-4 backdrop-blur-md">
           <div class="flex items-center gap-3">
             <button @click="menuAbierto = true" class="text-slate-400 hover:text-white md:hidden focus:outline-none">
@@ -72,7 +71,6 @@
             <h1 class="font-display text-lg font-bold tracking-widest text-amber-500 md:text-xl">RE-ROSARIO</h1>
           </div>
           
-          <!-- Tipo de Rosario Selector rápido -->
           <div class="flex items-center gap-2">
             <select 
               x-model="tipoRosario" 
@@ -83,45 +81,58 @@
           </div>
         </header>
 
-        <!-- PANEL DE CONFIGURACIÓN DE DIFUNTOS (Reactivo) -->
+        <!-- PANEL DE CONFIGURACIÓN DE DIFUNTOS (Reactivo y Modular) -->
         <template x-if="tipoRosario === 'difuntos'">
           <div class="bg-slate-900/40 border-b border-slate-900 p-6 animate-fade-in">
-            <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-              <div>
-                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Nombre del Difunto</label>
-                <input 
-                  type="text" 
-                  x-model="nombreDifunto" 
-                  placeholder="Escribe su nombre..."
-                  class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-amber-500" />
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Género del Difunto</label>
-                <div class="flex items-center gap-4 py-2">
-                  <label class="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
-                    <input type="radio" value="hermano" x-model="generoDifunto" class="accent-amber-500" /> Hermano
-                  </label>
-                  <label class="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
-                    <input type="radio" value="hermana" x-model="generoDifunto" class="accent-amber-500" /> Hermana
-                  </label>
+            <div class="max-w-2xl mx-auto space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Nombre del Difunto</label>
+                  <input 
+                    type="text" 
+                    x-model="nombreDifunto" 
+                    placeholder="Escribe su nombre..."
+                    class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-amber-500" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Género del Difunto</label>
+                  <div class="flex items-center gap-4 py-2">
+                    <label class="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+                      <input type="radio" value="hermano" x-model="generoDifunto" class="accent-amber-500" /> Hermano
+                    </label>
+                    <label class="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
+                      <input type="radio" value="hermana" x-model="generoDifunto" class="accent-amber-500" /> Hermana
+                    </label>
+                  </div>
+                </div>
+                <div class="text-center md:text-right">
+                  <button 
+                    @click="reiniciar()" 
+                    class="text-xs text-amber-500 hover:text-amber-400 font-semibold border border-amber-500/20 px-4 py-2 rounded-lg hover:bg-amber-500/5 transition-all">
+                    Reiniciar Rezo
+                  </button>
                 </div>
               </div>
-              <div class="text-center md:text-right pt-2 md:pt-0">
-                <button 
-                  @click="reiniciar()" 
-                  class="text-xs text-amber-500 hover:text-amber-400 font-semibold border border-amber-500/20 px-4 py-2 rounded-lg hover:bg-amber-500/5 transition-all">
-                  Reiniciar Rezo
-                </button>
+
+              <!-- OPCIONES DE LITURGIA MODULAR -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-800/60 pt-4">
+                <label class="flex items-start gap-2.5 cursor-pointer text-xs md:text-sm text-slate-300 group">
+                  <input type="checkbox" x-model="incluirRitosIniciales" class="accent-amber-500 mt-1 rounded border-slate-800 bg-slate-950" />
+                  <span class="group-hover:text-slate-100 transition-colors">Incluir Ritos Iniciales del Velorio (Pésame, Evangelio, etc.)</span>
+                </label>
+                <label class="flex items-start gap-2.5 cursor-pointer text-xs md:text-sm text-slate-300 group">
+                  <input type="checkbox" x-model="incluirLevantaCruz" class="accent-amber-500 mt-1 rounded border-slate-800 bg-slate-950" />
+                  <span class="group-hover:text-slate-100 transition-colors">Incluir Ceremonia de Levantamiento de la Cruz (Rito Final)</span>
+                </label>
               </div>
             </div>
           </div>
         </template>
 
-        <!-- CARTA DE ORACIÓN REACTIVA PRINCIPAL -->
+        <!-- CARTA DE ORACIÓN REACTIVA -->
         <section class="flex-1 px-6 py-8 md:py-12">
           <div class="max-w-2xl mx-auto bg-slate-900/20 border border-slate-900/60 rounded-2xl p-6 md:p-10 min-h-[400px] flex flex-col justify-between animate-fade-in" :key="pasoActualIndex">
             
-            <!-- CONTENEDOR DE RENDERS SEGÚN EL TIPO DE PASO -->
             <div class="space-y-6">
 
               <!-- A. Render tipo TEXTO estándar -->
@@ -132,7 +143,7 @@
                 </div>
               </template>
 
-              <!-- B. Render tipo INVOCACIÓN (Guía/Respuesta dinámicas) -->
+              <!-- B. Render tipo INVOCACIÓN -->
               <template x-if="pasoActual.tipo === 'invocacion'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -157,12 +168,11 @@
                 </div>
               </template>
 
-              <!-- D. Render tipo AVEMARÍAS (Con Decenario Interactivo) -->
+              <!-- D. Render tipo AVEMARÍAS (Decenario Interactivo) -->
               <template x-if="pasoActual.tipo === 'avemarias'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
                   
-                  <!-- Decenario de Cuentas -->
                   <div class="flex justify-center items-center gap-2 py-4 flex-wrap">
                     <template x-for="n in 10">
                       <button 
@@ -199,7 +209,7 @@
                 </div>
               </template>
 
-              <!-- F. Render tipo JACULATORIAS DIFUNTOS (Especial Latín/Español/Sangre) -->
+              <!-- F. Render tipo JACULATORIAS DIFUNTOS -->
               <template x-if="pasoActual.tipo === 'jaculatorias-difuntos'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -229,7 +239,7 @@
                 </div>
               </template>
 
-              <!-- G. Render tipo GUÍA-RESPUESTA estándar (Salves / Ofrecimiento) -->
+              <!-- G. Render tipo GUÍA-RESPUESTA (Salves / Ofrecimiento) -->
               <template x-if="pasoActual.tipo === 'guia-respuesta'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -271,7 +281,6 @@
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
                   
-                  <!-- Progress bar -->
                   <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-900 overflow-hidden">
                     <div class="bg-amber-500 h-1.5 transition-all duration-300" :style="`width: ${progresoLetaniasPorcentaje()}%`"></div>
                   </div>
@@ -307,7 +316,7 @@
                 </div>
               </template>
 
-              <!-- J. Render tipo ORACIÓN FINAL (Standard) -->
+              <!-- J. Render tipo ORACIÓN FINAL -->
               <template x-if="pasoActual.tipo === 'oracion-final'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -365,7 +374,7 @@
                 </div>
               </template>
 
-              <!-- M. Render tipo INVOCACIONES DE RESURRECCIÓN (Rito de cruz) -->
+              <!-- M. Render tipo INVOCACIONES DE RESURRECCIÓN -->
               <template x-if="pasoActual.tipo === 'invocaciones-resurreccion'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -380,7 +389,7 @@
                 </div>
               </template>
 
-              <!-- N. Render tipo RITO CRUZ PASO (Levantamiento de Cruz) -->
+              <!-- N. Render tipo RITO CRUZ PASO -->
               <template x-if="pasoActual.tipo === 'rito-cruz-paso'">
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -390,7 +399,6 @@
                   <div class="space-y-4">
                     <span class="text-xs text-slate-500 font-bold uppercase tracking-wider block" x-text="pasoActual.indicacion"></span>
                     
-                    <!-- Estrofas Cantadas -->
                     <div class="bg-slate-900/40 p-5 rounded-xl border border-slate-900 space-y-4">
                       <template x-for="estrofa in pasoActual.estrofas">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 border-b border-slate-900 pb-2">
@@ -406,12 +414,10 @@
                       </template>
                     </div>
 
-                    <!-- Cruz de Cristo Vencedor -->
                     <template x-if="pasoActual.cruzVencedor">
                       <div class="bg-amber-500 text-slate-950 p-4 rounded-lg text-center font-bold text-lg" x-html="formatText(pasoActual.cruzVencedor)"></div>
                     </template>
 
-                    <!-- Canto Adicional -->
                     <template x-if="pasoActual.cantoAdicional">
                       <div class="bg-slate-900/30 p-4 rounded-lg border border-slate-900 italic text-slate-300 text-lg text-center" x-html="formatText(pasoActual.cantoAdicional)"></div>
                     </template>
@@ -419,7 +425,7 @@
                 </div>
               </template>
 
-              <!-- O. Render tipo CRUZ TRIUNFANTE (Final Rito Cruz) -->
+              <!-- O. Render tipo CRUZ TRIUNFANTE -->
               <template x-if="pasoActual.tipo === 'cruz-triunfante'">
                 <div class="space-y-6 text-center py-8">
                   <h2 class="text-3xl font-semibold text-amber-500 font-display" x-text="pasoActual.titulo"></h2>
@@ -445,7 +451,6 @@
 
             </div>
 
-            <!-- PIE DE LA CARTA (Indicaciones del Ritual / Consejos de Navegación) -->
             <div class="border-t border-slate-900 pt-4 mt-8 flex flex-col md:flex-row justify-between items-center gap-2">
               <span class="text-xs italic text-slate-500" x-text="pasoActual.indicacion || pasoActual.indicacionEspecial"></span>
               <span class="text-xs text-amber-500/70 font-semibold tracking-wider uppercase" x-text="`Paso ${pasoActualIndex + 1} de ${pasos.length}`"></span>
@@ -454,7 +459,7 @@
           </div>
         </section>
 
-        <!-- 3. BARRA DE CONTROL DE NAVEGACIÓN (BOTTOM BAR) -->
+        <!-- 3. BARRA DE CONTROL DE NAVEGACIÓN -->
         <footer class="sticky bottom-0 z-30 flex items-center justify-between border-t border-slate-900 bg-slate-950/90 px-6 py-4 backdrop-blur-md">
           <button 
             @click="anterior()" 
@@ -474,7 +479,7 @@
 
     </div>
 
-    <!-- Enlace al Script principal de Alpine y lógica del Rosario -->
+    <!-- Script de Alpine -->
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
