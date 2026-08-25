@@ -11,14 +11,14 @@ Alpine.data('rosarioApp', () => ({
   letaniaActualIndex: 0,
   misterioDelDia: null,
 
-  // Reactividad del Rosario Dual
-  tipoRosario: 'normal',
-  nombreDifunto: '',
-  generoDifunto: 'hermano', // 'hermano' o 'hermana'
+  // Reactividad del Rosario Dual (con persistencia en localStorage)
+  tipoRosario: localStorage.getItem('rosario_tipo') || 'normal',
+  nombreDifunto: localStorage.getItem('rosario_nombre') || '',
+  generoDifunto: localStorage.getItem('rosario_genero') || 'hermano', // 'hermano' o 'hermana'
 
   // Interruptores modulares para el Rosario de Difuntos
-  incluirRitosIniciales: false,
-  incluirLevantaCruz: false,
+  incluirRitosIniciales: localStorage.getItem('rosario_ritos') === 'true',
+  incluirLevantaCruz: localStorage.getItem('rosario_cruz') === 'true',
 
   // Control de interfaz
   menuAbierto: false,
@@ -27,25 +27,36 @@ Alpine.data('rosarioApp', () => ({
     this.misterioDelDia = obtenerMisterioDelDia();
     this.generarFlujo();
 
-    // Observadores reactivos para regenerar el flujo al cambiar estados en vivo
-    this.$watch('tipoRosario', () => {
+    // Observadores reactivos para guardar en localStorage y regenerar flujo al cambiar estados en vivo
+    this.$watch('tipoRosario', (val) => {
+      localStorage.setItem('rosario_tipo', val);
       this.generarFlujo();
       this.reiniciar();
     });
-    this.$watch('generoDifunto', () => {
+    this.$watch('generoDifunto', (val) => {
+      localStorage.setItem('rosario_genero', val);
       this.generarFlujo();
     });
-    this.$watch('nombreDifunto', () => {
+    this.$watch('nombreDifunto', (val) => {
+      localStorage.setItem('rosario_nombre', val);
       this.generarFlujo();
     });
-    this.$watch('incluirRitosIniciales', () => {
+    this.$watch('incluirRitosIniciales', (val) => {
+      localStorage.setItem('rosario_ritos', val);
       this.generarFlujo();
       this.reiniciar(); // Al alterar la longitud inicial, reiniciamos para evitar desbordamiento de índice
     });
-    this.$watch('incluirLevantaCruz', () => {
+    this.$watch('incluirLevantaCruz', (val) => {
+      localStorage.setItem('rosario_cruz', val);
       this.generarFlujo();
       this.reiniciar(); // Al alterar el rito final, reiniciamos para mantener consistencia
     });
+  },
+
+  limpiarNombre() {
+    this.nombreDifunto = '';
+    localStorage.removeItem('rosario_nombre');
+    if (navigator.vibrate) navigator.vibrate(15);
   },
 
   formatText(text) {
@@ -210,17 +221,30 @@ Alpine.data('rosarioApp', () => ({
     // --- MISTERIOS ---
     const misterios = this.misterioDelDia || obtenerMisterioDelDia();
     for (let i = 0; i < 5; i++) {
+      const numeroMisterio = i + 1;
+      const esMisterioEspecial = (numeroMisterio === 2 || numeroMisterio === 4);
+
       flujo.push({
         tipo: 'misterio-anuncio',
-        titulo: `Misterio ${i + 1}`,
+        titulo: `Misterio ${numeroMisterio}`,
         texto: misterios.lista[i]
       });
 
-      flujo.push({
-        tipo: 'texto',
-        titulo: ORACIONES.padrenuestro.titulo,
-        texto: ORACIONES.padrenuestro.texto
-      });
+      if (esMisterioEspecial) {
+        // Estructura especial para los Misterios 2 y 4
+        flujo.push({
+          tipo: 'texto',
+          titulo: 'Padrenuestro (Inicios)',
+          texto: 'Rezandero: Padre Nuestro...\n\n(Las personas comienzan a rezar el Padre Nuestro).\n\nRezandero: Danos hoy nuestro pan de cada día; perdona nuestras ofensas como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén.'
+        });
+      } else {
+        // Estructura estándar para Misterios 1, 3 y 5
+        flujo.push({
+          tipo: 'texto',
+          titulo: ORACIONES.padrenuestro.titulo,
+          texto: ORACIONES.padrenuestro.texto
+        });
+      }
 
       flujo.push({
         tipo: 'avemarias',
@@ -229,12 +253,21 @@ Alpine.data('rosarioApp', () => ({
         respuesta: ORACIONES.avemaria.respuesta
       });
 
-      flujo.push({
-        tipo: 'text',
-        tipo: 'texto',
-        titulo: ORACIONES.gloria.titulo,
-        texto: ORACIONES.gloria.texto
-      });
+      if (esMisterioEspecial) {
+        // Gloria e intercambio especial para Misterios 2 y 4
+        flujo.push({
+          tipo: 'texto',
+          titulo: 'Gloria y Conclusión del Misterio',
+          texto: 'Rezandero: Gloria, Santa María, Madre de Dios, ruega por nosotros...\n\nAsamblea responde: Gloria al Padre, al Hijo y al Espíritu Santo...\n\nRezandero continúa: Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.'
+        });
+      } else {
+        // Gloria estándar para Misterios 1, 3 y 5
+        flujo.push({
+          tipo: 'texto',
+          titulo: ORACIONES.gloria.titulo,
+          texto: ORACIONES.gloria.texto
+        });
+      }
 
       if (this.tipoRosario === 'difuntos') {
         flujo.push({
