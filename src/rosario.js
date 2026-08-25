@@ -63,7 +63,7 @@ export const ORACIONES = {
   jaculatoriaMisterioDifuntos: {
     titulo: "Jaculatoria del Misterio",
     latin: "Requiem æternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pace. Amen.",
-    espanol: "Dale, Señor, el descanso eterno, y brille para él (ella) la luz eterna. Descanse en paz. Amén.",
+    espanol: "Dale, Señor, el descanso eterno, y brille para él(ella) la luz eterna. Descanse en paz. Amén.",
     sangreV: "Si por tu sangre preciosa, Señor, lo(la) has redimido.",
     sangreR: "Que lo(la) perdones, te pido, por tu pasión dolorosa.",
     misericordia: "Que por Tu infinita misericordia el alma de N... y de todos los fieles difuntos descansen en paz. Así sea."
@@ -90,47 +90,27 @@ export const CLOSING_DEVOTION = {
     guia: "Padre nuestro, que estás en el cielo, santificado sea tu Nombre, venga a nosotros tu reino, hágase, Señor, tu voluntad, así en la tierra como en el cielo.",
     respuesta: "Danos hoy nuestro pan de cada día; perdona nuestras ofensas, así como nosotros perdonamos a los que nos ofenden; y no nos dejes caer en la tentación, y líbranos y guárdanos de todo mal. Amén."
   },
+  // Salves unificadas con interpolación nativa para difuntos
   primeraSalve: {
     titulo: "Primera Salve — Fe",
-    guia: "Dios te salve, María Santísima, hija de Dios Padre, Virgen purísima antes del parto, en tus manos encomiendo mi fe para que la ilumines. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
-    respuesta: "Santa María, Madre de Dios, ruega, Señora, por nosotros los pecadores, ahora y en la hora de nuestra muerte. Amén, Jesús."
-  },
-  primeraSalveDifuntos: {
-    titulo: "Primera Salve — Fe",
-    guia: "Dios te salve, María Santísima, hija de Dios Padre, Virgen purísima antes del parto, en tus manos encomiendo mi fe para que la ilumines y el alma de nuestro(a) hermano(a) N… para que la salves. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
-    respuesta: "Santa María, Madre de Dios, ruega, Señora, por él (ella) y por nosotros los pecadores, ahora y en la hora de nuestra muerte. Amén, Jesús."
+    guia: "Dios te salve, María Santísima, hija de Dios Padre, Virgen purísima antes del parto, en tus manos encomiendo mi fe para que la iluminesROSARIO_DIFUNTOS_SUFIJO. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
+    respuesta: "Santa María, Madre de Dios, ruega, Señora, por ROSARIO_DIFUNTOS_RESPUESTA los pecadores, ahora y en la hora de nuestra muerte. Amén, Jesús."
   },
   segundaSalve: {
     titulo: "Segunda Salve — Esperanza",
-    guia: "Dios te salve, María Santísima, Madre de Dios Hijo, Virgen purísima en el parto, en tus manos encomiendo mi esperanza para que la alientes. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
-    respuesta: "Santa María, Madre de Dios, ruega, Señora, por nosotros los pecadores, ahora y en la hora de nuestra muerte. Amén."
-  },
-  segundaSalveDifuntos: {
-    titulo: "Segunda Salve — Esperanza",
-    guia: "Dios te salve, María Santísima, Madre de Dios Hijo, Virgen purísima en el parto, en tus manos encomiendo mi esperanza para que la alientes y el alma de nuestro(a) hermano(a) N… para que la salves. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
-    respuesta: "Santa María, Madre de Dios, ruega, Señora, por él (ella) y por nosotros los pecadores, ahora y en la hora de nuestra muerte. Amén."
+    guia: "Dios te salve, María Santísima, Madre de Dios Hijo, Virgen purísima en el parto, en tus manos encomiendo mi esperanza para que la alientesROSARIO_DIFUNTOS_SUFIJO. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
+    respuesta: "Santa María, Madre de Dios, ruega, Señora, por ROSARIO_DIFUNTOS_RESPUESTA los pecadores, ahora y en la hora de nuestra muerte. Amén."
   },
   terceraSalve: {
     titulo: "Tercera Salve — Caridad",
-    guia: "Dios te salve, María Santísima, esposa de Dios Espíritu Santo, Virgen purísima después del parto, en tus manos encomiendo mi caridad para que la inflames. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
-    respuesta: "Santa María, Madre de Dios, ruega, Señora, por nosotros los pecadores, ahora y en la hora de nuestra muerte. Amén."
-  },
-  terceraSalveDifuntos: {
-    titulo: "Tercera Salve — Caridad",
-    guia: "Dios te salve, María Santísima, esposa de Dios Espíritu Santo, Virgen purísima después del parto, en tus manos encomiendo mi caridad para que la inflames y el alma de nuestro(a) hermano(a) N… para que la salves. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
-    respuesta: "Santa María, Madre de Dios, ruega, Señora, por él (ella) y por nosotros los pecadores, ahora y en la hora de nuestra muerte. Amén."
+    guia: "Dios te salve, María Santísima, esposa de Dios Espíritu Santo, Virgen purísima después del parto, en tus manos encomiendo mi caridad para que la inflamesROSARIO_DIFUNTOS_SUFIJO. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
+    respuesta: "Santa María, Madre de Dios, ruega, Señora, por ROSARIO_DIFUNTOS_RESPUESTA los pecadores, ahora y en la hora de nuestra muerte. Amén."
   },
   cuartaSalve: {
     titulo: "Templo, Trono y Sagrario",
     guia: "Dios te salve, María Santísima, Templo, Trono y Sagrario de la Santísima Trinidad, Virgen concebida sin la culpa original, dame, Señora, tu gracia para que con ella me salve y con pureza te diga:\n\nDios te salve, Reina y Madre, Madre de misericordia; vida, dulzura y esperanza nuestra; ¡Dios te salve! A ti clamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas. ¡Ea, pues, Señora, abogada nuestra!, vuelve a nosotros esos tus ojos misericordiosos, y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clemente, oh piadosa, oh dulce siempre Virgen María!",
-    peticion: "Ruega por nosotros, Santa Madre de Dios.",
-    promesa: "Para que seamos dignos de alcanzar las promesas de Nuestro Señor Jesucristo. Amén."
-  },
-  cuartaSalveDifuntos: {
-    titulo: "Templo, Trono y Sagrario",
-    guia: "Dios te salve, María Santísima, Templo, Trono y Sagrario de la Santísima Trinidad, Virgen concebida sin la culpa original, dame, Señora, tu gracia para que con ella me salve y con pureza te diga:\n\nDios te salve, Reina y Madre, Madre de misericordia; vida, dulzura y esperanza nuestra; ¡Dios te salve! A ti clamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas. ¡Ea, pues, Señora, abogada nuestra!, vuelve a nosotros esos tus ojos misericordiosos, y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clemente, oh piadosa, oh dulce siempre Virgen María!",
-    peticion: "Ruega por él (ella) y por nosotros, Santa Madre de Dios.",
-    promesa: "Para que seamos dignos de alcanzar las divinas gracias y promesas de Nuestro Señor Jesucristo. Amén."
+    peticion: "Ruega por ROSARIO_DIFUNTOS_PETICION Santa Madre de Dios.",
+    promesa: "Para que seamos dignos de alcanzar ROSARIO_DIFUNTOS_PROMESA promesas de Nuestro Señor Jesucristo. Amén."
   },
   oracionSabanaDifuntos: {
     titulo: "Oración de la Sábana Santa",
@@ -186,27 +166,16 @@ export const MISTERIOS = {
 };
 
 export const LETANIAS = {
+  // Letanías base unificadas con comodines de sufijo para difuntos
   iniciales: [
-    { invocacion: "Señor, ten piedad", respuesta: "Señor, ten piedad" },
-    { invocacion: "Cristo, ten piedad", respuesta: "Cristo, ten piedad" },
-    { invocacion: "Señor, ten piedad", respuesta: "Señor, ten piedad" },
-    { invocacion: "Cristo, óyenos", respuesta: "Cristo, óyenos" },
-    { invocacion: "Cristo, escúchanos", respuesta: "Cristo, escúchanos" },
-    { invocacion: "Dios Padre celestial", respuesta: "Ten misericordia de nosotros" },
-    { invocacion: "Dios Hijo, Redentor del mundo", respuesta: "Ten misericordia de nosotros" },
-    { invocacion: "Dios Espíritu Santo", respuesta: "Ten misericordia de nosotros" },
-    { invocacion: "Trinidad Santa, un solo Dios", respuesta: "Ten misericordia de nosotros" }
-  ],
-  inicialesDifuntos: [
-    { invocacion: "Señor, ten piedad de él (ella)", respuesta: "Señor, ten piedad de él (ella)" },
-    { invocacion: "Cristo, ten piedad de él (ella)", respuesta: "Cristo, ten piedad de él (ella)" },
-    { invocacion: "Señor, ten piedad de él (ella)", respuesta: "Señor, ten piedad de él (ella)" },
-    { invocacion: "Jesucristo, óyelo (la)", respuesta: "Jesucristo, óyelo (la)" },
-    { invocacion: "Jesucristo, escúchalo (la)", respuesta: "Jesucristo, escúchalo (la)" },
-    { invocacion: "Dios Padre celestial", respuesta: "Ten piedad de él (ella)" },
-    { invocacion: "Dios Hijo, Redentor del mundo", respuesta: "Ten piedad de él (ella)" },
-    { invocacion: "Dios Espíritu Santo", respuesta: "Ten piedad de él (ella)" },
-    { invocacion: "Trinidad Santa, que eres un solo Dios", respuesta: "Ten piedad de él (ella)" }
+    { invocacion: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX", respuesta: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX" },
+    { invocacion: "Cristo, ten piedadROSARIO_DIFUNTOS_LET_SUFIX", respuesta: "Cristo, ten piedadROSARIO_DIFUNTOS_LET_SUFIX" },
+    { invocacion: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX", respuesta: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX" },
+    { invocacion: "Jesucristo, óyenosROSARIO_DIFUNTOS_OYELO", respuesta: "Jesucristo, escúchanosROSARIO_DIFUNTOS_ESCUDALO" }, // Se ajustará inteligentemente
+    { invocacion: "Dios Padre celestial", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" },
+    { invocacion: "Dios Hijo, Redentor del mundo", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" },
+    { invocacion: "Dios Espíritu Santo", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" },
+    { invocacion: "Trinidad Santa, un solo Dios", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" }
   ],
   virgen: {
     respuestaComun: "Ruega por nosotros",
@@ -252,7 +221,7 @@ export const LETANIAS = {
     pazR: "Así sea.",
     amparo: "Bajo tu amparo nos acogemos, Santa Madre de Dios; no desprecies las oraciones que te hacemos en nuestras necesidades, antes bien, líbranos de todos los peligros, ¡oh Virgen gloriosa y bendita!",
     peticion: "Ruega por él (ella) y por nosotros, Santa Madre de Dios.",
-    promesa: "Para que seamos dignos de alcanzar las divinas gracias y promesas de Nuestro Señor Jesucristo. Amén."
+    promesa: "Para que seamos dignos de alcanzar las divinas gracias y promesas de nuestro Señor Jesucristo. Amén."
   }
 };
 

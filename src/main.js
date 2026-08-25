@@ -67,7 +67,19 @@ Alpine.data('rosarioApp', () => ({
       const nombre = this.nombreDifunto.trim() || 'N...';
       const esMujer = this.generoDifunto === 'hermana';
 
-      // 1. Reemplazo de concordancias gramaticales y adjetivos específicos del Ritual de Difuntos
+      // 1. Reemplazo de comodines inteligentes para las Salves y oraciones unificadas
+      t = t.replace(/ROSARIO_DIFUNTOS_SUFIJO/g, ` y el alma de nuestro(a) hermano(a) N… para que la salves`);
+      t = t.replace(/ROSARIO_DIFUNTOS_RESPUESTA/g, `él (ella) y por`);
+      t = t.replace(/ROSARIO_DIFUNTOS_PETICION/g, `él (ella) y por`);
+      t = t.replace(/ROSARIO_DIFUNTOS_PROMESA/g, `las divinas gracias y`);
+
+      // 2. Reemplazo de comodines para las Letanías de Difuntos
+      t = t.replace(/ROSARIO_DIFUNTOS_LET_SUFIX/g, ` de él (ella)`);
+      t = t.replace(/ROSARIO_DIFUNTOS_OYELO/g, `o (la)`);
+      t = t.replace(/ROSARIO_DIFUNTOS_ESCUDALO/g, `lo (la)`);
+      t = t.replace(/ROSARIO_DIFUNTOS_TEN_PIEDAD/g, ` de él (ella)`);
+
+      // 3. Reemplazo de concordancias gramaticales y adjetivos específicos del Ritual de Difuntos
       t = t.replace(/bautizado\(a\)/g, esMujer ? 'bautizada' : 'bautizado');
       t = t.replace(/bendícelo\(a\)/g, esMujer ? 'bendícela' : 'bendícelo');
       t = t.replace(/levántalo\(a\)/g, esMujer ? 'levántala' : 'levántalo');
@@ -75,28 +87,37 @@ Alpine.data('rosarioApp', () => ({
       t = t.replace(/recíbelo\(a\)/g, esMujer ? 'recíbela' : 'recíbelo');
       t = t.replace(/este\(a\)\s+hijo\(a\)\s+tuyo/g, esMujer ? 'esta hija tuya' : 'este hijo tuyo');
 
-      // 2. Reemplazo de hermanos (sin comodín global /i para salvar la Santísima Trinidad)
+      // 4. Reemplazo de hermanos
       const hermanoReplacement = esMujer ? `nuestra hermana ${nombre}` : `nuestro hermano ${nombre}`;
       t = t.replace(/nuestro\(a\)\s+hermano\(a\)\s+N[…\.]+/g, hermanoReplacement);
       t = t.replace(/nuestro\(a\)\s+hermano\(a\)/g, esMujer ? 'nuestra hermana' : 'nuestro hermano');
       t = t.replace(/hermano\(a\)/g, esMujer ? 'hermana' : 'hermano');
 
-      // 3. Reemplazo de siervos
+      // 5. Reemplazo de siervos e hijos
       t = t.replace(/siervo\(a\)\s+N[…\.]+/g, esMujer ? `sierva ${nombre}` : `siervo ${nombre}`);
       t = t.replace(/siervo\(a\)/g, esMujer ? 'sierva' : 'siervo');
-
-      // 4. Reemplazo de hijos
       t = t.replace(/hijo\(a\)\s+N[…\.]+/g, esMujer ? `hija ${nombre}` : `hijo ${nombre}`);
       t = t.replace(/hijo\(a\)/g, esMujer ? 'hija' : 'hijo');
 
-      // 5. Pronombres y artículos reactivos
+      // 6. Pronombres y artículos reactivos
       t = t.replace(/él\(ella\)/g, esMujer ? 'ella' : 'él');
       t = t.replace(/lo\(la\)/g, esMujer ? 'la' : 'lo');
       t = t.replace(/el\(la\)/g, esMujer ? 'la' : 'el');
 
-      // 6. Comodín de nombre residual
+      // 7. Comodín de nombre residual
       t = t.replace(/N[…\.]+/g, nombre);
     } else {
+      // Limpieza de comodines para el modo Estándar (se omiten las cláusulas de difuntos)
+      t = t.replace(/ROSARIO_DIFUNTOS_SUFIJO/g, '');
+      t = t.replace(/ROSARIO_DIFUNTOS_RESPUESTA/g, '');
+      t = t.replace(/ROSARIO_DIFUNTOS_PETICION/g, '');
+      t = t.replace(/ROSARIO_DIFUNTOS_PROMESA/g, '');
+
+      t = t.replace(/ROSARIO_DIFUNTOS_LET_SUFIX/g, '');
+      t = t.replace(/ROSARIO_DIFUNTOS_OYELO/g, 's');
+      t = t.replace(/ROSARIO_DIFUNTOS_ESCUDALO/g, 'nos');
+      t = t.replace(/ROSARIO_DIFUNTOS_TEN_PIEDAD/g, ' de nosotros');
+
       // Formato neutro/masculino litúrgico para rosario estándar
       t = t.replace(/nuestro\(a\)\s+hermano\(a\)/g, 'nuestro hermano');
       t = t.replace(/hermano\(a\)/g, 'hermano');
@@ -264,31 +285,31 @@ Alpine.data('rosarioApp', () => ({
     if (this.tipoRosario === 'difuntos') {
       flujo.push({
         tipo: 'guia-respuesta',
-        titulo: CLOSING_DEVOTION.primeraSalveDifuntos.titulo,
-        guia: CLOSING_DEVOTION.primeraSalveDifuntos.guia,
-        respuesta: CLOSING_DEVOTION.primeraSalveDifuntos.respuesta
+        titulo: CLOSING_DEVOTION.primeraSalve.titulo,
+        guia: CLOSING_DEVOTION.primeraSalve.guia,
+        respuesta: CLOSING_DEVOTION.primeraSalve.respuesta
       });
 
       flujo.push({
         tipo: 'guia-respuesta',
-        titulo: CLOSING_DEVOTION.segundaSalveDifuntos.titulo,
-        guia: CLOSING_DEVOTION.segundaSalveDifuntos.guia,
-        respuesta: CLOSING_DEVOTION.segundaSalveDifuntos.respuesta
+        titulo: CLOSING_DEVOTION.segundaSalve.titulo,
+        guia: CLOSING_DEVOTION.segundaSalve.guia,
+        respuesta: CLOSING_DEVOTION.segundaSalve.respuesta
       });
 
       flujo.push({
         tipo: 'guia-respuesta',
-        titulo: CLOSING_DEVOTION.terceraSalveDifuntos.titulo,
-        guia: CLOSING_DEVOTION.terceraSalveDifuntos.guia,
-        respuesta: CLOSING_DEVOTION.terceraSalveDifuntos.respuesta
+        titulo: CLOSING_DEVOTION.terceraSalve.titulo,
+        guia: CLOSING_DEVOTION.terceraSalve.guia,
+        respuesta: CLOSING_DEVOTION.terceraSalve.respuesta
       });
 
       flujo.push({
         tipo: 'cuarta-salve-difuntos',
-        titulo: CLOSING_DEVOTION.cuartaSalveDifuntos.titulo,
-        guia: CLOSING_DEVOTION.cuartaSalveDifuntos.guia,
-        peticion: CLOSING_DEVOTION.cuartaSalveDifuntos.peticion,
-        promesa: CLOSING_DEVOTION.cuartaSalveDifuntos.promesa
+        titulo: CLOSING_DEVOTION.cuartaSalve.titulo,
+        guia: CLOSING_DEVOTION.cuartaSalve.guia,
+        peticion: CLOSING_DEVOTION.cuartaSalve.peticion,
+        promesa: CLOSING_DEVOTION.cuartaSalve.promesa
       });
 
       flujo.push({
@@ -300,7 +321,7 @@ Alpine.data('rosarioApp', () => ({
       flujo.push({
         tipo: 'letanias-difuntos',
         titulo: 'Letanías de la Santísima Virgen (Difuntos)',
-        iniciales: LETANIAS.inicialesDifuntos,
+        iniciales: LETANIAS.iniciales,
         virgen: {
           respuestaComunDifuntos: LETANIAS.virgen.respuestaComunDifuntos,
           titulos: LETANIAS.virgen.titulos
@@ -632,7 +653,7 @@ Alpine.data('rosarioApp', () => ({
       
       if (anteriorPaso.tipo === 'avemarias') {
         this.avemariaActual = 10;
-      } else if (anteriorP_paso_tipo_es_letania(anteriorPaso)) {
+      } else if (anteriorPaso_tipo_es_letania(anteriorPaso)) {
         this.letaniaActualIndex = this.obtenerTotalLetaniasForStep(anteriorPaso) - 1;
       } else {
         this.avemariaActual = 0;
@@ -652,7 +673,6 @@ Alpine.data('rosarioApp', () => ({
   }
 }));
 
-// Función auxiliar para mantener la limpieza en el método anterior()
 function anteriorPaso_tipo_es_letania(paso) {
   return paso.tipo === 'letanias' || paso.tipo === 'letanias-difuntos';
 }
