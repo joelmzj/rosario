@@ -13,10 +13,6 @@ export const ORACIONES = {
   },
   actoContricion: {
     titulo: "Acto de Contrición",
-    texto: "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre y Redentor mío. Por ser Tú quién eres, Bondad infinita, y porque te amo sobre todas las cosas, me pesa de todo corazón haberte ofendido. También me pesa que puedes castigarme con las penas del infierno. Ayudado de tu divina gracia, propongo firmemente nunca más pecar, confesarme y cumplir la penitencia que me fuere impuesta. Amén."
-  },
-  actoContricionDifuntos: {
-    titulo: "Acto de Contrición",
     texto: "Señor mío Jesucristo, Dios y hombre verdadero, me pesa de todo corazón haber pecado, porque he merecido el infierno y he perdido el cielo, sobre todo porque te ofendí a Ti, a quien amo sobre todas las cosas. Propongo firmemente, con tu gracia, enmendarme, evitar las ocasiones de pecado, confesarme y cumplir la penitencia. Confío en que me perdonarás por tu infinita misericordia. Amén."
   },
   apertura: {
@@ -25,14 +21,6 @@ export const ORACIONES = {
       { v: "Señor, ábreme los labios.", r: "Y mi boca proclamará tu alabanza." },
       { v: "Dios mío, ven en mi auxilio.", r: "Señor, date prisa en socorrerme." },
       { v: "Gloria al Padre y al Hijo y al Espíritu Santo.", r: "Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén." }
-    ]
-  },
-  aperturaDifuntos: {
-    titulo: "Invocación Inicial",
-    lineas: [
-      { v: "Abre, Señor, mis labios.", r: "Y mi boca proclamará tu alabanza." },
-      { v: "Atiende a mí sin tardanza.", r: "Dame tu auxilio y favor." },
-      { v: "Gloria al Padre, al Hijo y al Espíritu Santo.", r: "Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén." }
     ]
   },
   ohDiosPerdonas: {
@@ -90,7 +78,6 @@ export const CLOSING_DEVOTION = {
     guia: "Padre nuestro, que estás en el cielo, santificado sea tu Nombre, venga a nosotros tu reino, hágase, Señor, tu voluntad, así en la tierra como en el cielo.",
     respuesta: "Danos hoy nuestro pan de cada día; perdona nuestras ofensas, así como nosotros perdonamos a los que nos ofenden; y no nos dejes caer en la tentación, y líbranos y guárdanos de todo mal. Amén."
   },
-  // Salves unificadas con interpolación nativa para difuntos
   primeraSalve: {
     titulo: "Primera Salve — Fe",
     guia: "Dios te salve, María Santísima, hija de Dios Padre, Virgen purísima antes del parto, en tus manos encomiendo mi fe para que la iluminesROSARIO_DIFUNTOS_SUFIJO. Llena eres de gracia, el Señor es contigo, bendita eres entre las mujeres y bendito sea el fruto de tu vientre, Jesús.",
@@ -134,7 +121,7 @@ export const MISTERIOS = {
     nombre: "Misterios Dolorosos",
     dias: [ MARTES, VIERNES ],
     lista: [
-      "La Oración de Jesús en el huerto",
+      "La Oración de Jesús in el huerto",
       "La Flagelación del Señor",
       "La Coronación de espinas",
       "Jesús con la Cruz a cuestas, camino del Calvario",
@@ -166,12 +153,11 @@ export const MISTERIOS = {
 };
 
 export const LETANIAS = {
-  // Letanías base unificadas con comodines de sufijo para difuntos
   iniciales: [
     { invocacion: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX", respuesta: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX" },
     { invocacion: "Cristo, ten piedadROSARIO_DIFUNTOS_LET_SUFIX", respuesta: "Cristo, ten piedadROSARIO_DIFUNTOS_LET_SUFIX" },
     { invocacion: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX", respuesta: "Señor, ten piedadROSARIO_DIFUNTOS_LET_SUFIX" },
-    { invocacion: "Jesucristo, óyenosROSARIO_DIFUNTOS_OYELO", respuesta: "Jesucristo, escúchanosROSARIO_DIFUNTOS_ESCUDALO" }, // Se ajustará inteligentemente
+    { invocacion: "Cristo, óyenosROSARIO_DIFUNTOS_OYELO", respuesta: "Cristo, escúchanosROSARIO_DIFUNTOS_ESCUDALO" },
     { invocacion: "Dios Padre celestial", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" },
     { invocacion: "Dios Hijo, Redentor del mundo", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" },
     { invocacion: "Dios Espíritu Santo", respuesta: "Ten misericordiaROSARIO_DIFUNTOS_TEN_PIEDAD" },
@@ -221,7 +207,7 @@ export const LETANIAS = {
     pazR: "Así sea.",
     amparo: "Bajo tu amparo nos acogemos, Santa Madre de Dios; no desprecies las oraciones que te hacemos en nuestras necesidades, antes bien, líbranos de todos los peligros, ¡oh Virgen gloriosa y bendita!",
     peticion: "Ruega por él (ella) y por nosotros, Santa Madre de Dios.",
-    promesa: "Para que seamos dignos de alcanzar las divinas gracias y promesas de nuestro Señor Jesucristo. Amén."
+    promesa: "Para que seamos dignos de alcanzar las divinas gracias y promesas de Nuestro Señor Jesucristo. Amén."
   }
 };
 

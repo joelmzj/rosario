@@ -183,16 +183,13 @@ Alpine.data('rosarioApp', () => ({
       });
     }
 
-    // --- INICIO COMÚN DEL ROSARIO ---
+    // --- INICIO COMÚN DEL ROSARIO (Ya unificado) ---
+    flujo.push({ tipo: 'texto', titulo: ORACIONES.inicio.titulo, texto: ORACIONES.inicio.texto });
+    flujo.push({ tipo: 'texto', titulo: ORACIONES.actoContricion.titulo, texto: ORACIONES.actoContricion.texto });
+    flujo.push({ tipo: 'invocacion', titulo: ORACIONES.apertura.titulo, lineas: ORACIONES.apertura.lineas });
+    
     if (this.tipoRosario === 'difuntos') {
-      flujo.push({ tipo: 'texto', titulo: ORACIONES.inicio.titulo, texto: ORACIONES.inicio.texto });
-      flujo.push({ tipo: 'texto', titulo: ORACIONES.actoContricionDifuntos.titulo, texto: ORACIONES.actoContricionDifuntos.texto });
-      flujo.push({ tipo: 'invocacion', titulo: ORACIONES.aperturaDifuntos.titulo, lineas: ORACIONES.aperturaDifuntos.lineas });
       flujo.push({ tipo: 'texto', titulo: ORACIONES.ohDiosPerdonas.titulo, texto: ORACIONES.ohDiosPerdonas.texto });
-    } else {
-      flujo.push({ tipo: 'texto', titulo: ORACIONES.inicio.titulo, texto: ORACIONES.inicio.texto });
-      flujo.push({ tipo: 'texto', titulo: ORACIONES.actoContricion.titulo, texto: ORACIONES.actoContricion.texto });
-      flujo.push({ tipo: 'invocacion', titulo: ORACIONES.apertura.titulo, lineas: ORACIONES.apertura.lineas });
     }
 
     // --- MISTERIOS ---
