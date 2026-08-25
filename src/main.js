@@ -44,12 +44,12 @@ Alpine.data('rosarioApp', () => ({
     this.$watch('incluirRitosIniciales', (val) => {
       localStorage.setItem('rosario_ritos', val);
       this.generarFlujo();
-      this.reiniciar(); // Al alterar la longitud inicial, reiniciamos para evitar desbordamiento de índice
+      this.reiniciar();
     });
     this.$watch('incluirLevantaCruz', (val) => {
       localStorage.setItem('rosario_cruz', val);
       this.generarFlujo();
-      this.reiniciar(); // Al alterar el rito final, reiniciamos para mantener consistencia
+      this.reiniciar();
     });
   },
 
@@ -116,21 +116,18 @@ Alpine.data('rosarioApp', () => ({
 
     // --- OPCIONAL: RITOS INICIALES DEL VELORIO ---
     if (this.tipoRosario === 'difuntos' && this.incluirRitosIniciales) {
-      // 1. Oración del Pésame [3, 7, 9]
       flujo.push({
         tipo: 'texto',
         titulo: 'La Oración del Pésame',
         texto: 'Nos ponemos todos de pie. Hemos venido a rezar por el alma de nuestro(a) hermano(a) N…\n\nRepetirán después de mí:\n\n“En tus manos, Señor, encomiendo su espíritu (Salmo 31, 6)”.\n\nTodos responden: En tus manos, Señor, encomiendo su espíritu.\n\nRezandero: Estamos seguros de haber pasado de la muerte a la vida, porque amamos a nuestros hermanos (1 Juan 3, 14).\n\nTodos: En tus manos, Señor, encomiendo su espíritu.\n\nRezandero: Aunque camine por lugares oscuros, nada temo, porque Tú estás conmigo (Salmo 23, 4).\n\nTodos: En tus manos, Señor, encomiendo su espíritu.\n\nRezandero: Vengan benditos de mi Padre, tomen posesión del Reino preparado para ustedes (Mateo 25, 34).\n\nTodos: En tus manos, Señor, encomiendo mi espíritu.\n\nRezandero: Quiero que donde yo esté, estén también conmigo, dice Jesucristo (Juan 17, 24).\n\nTodos: En tus manos, Señor, encomiendo mi espíritu.\n\nRezandero: Señor nuestro, que eres amor; recibe en tu presencia a tu hijo(a) N... a quien has llamado de esta vida a tu presencia.\n\nPerdónale todos sus pecados, bendícelo(a) con tu luz y paz eternas, levántalo(a) para que viva siempre con todos tus santos en la gloria de la resurrección. Por Cristo Nuestro Señor.\n\nTodos: Amén.'
       });
 
-      // 2. Lectura del Evangelio [7, 10, 11]
       flujo.push({
         tipo: 'texto',
         titulo: 'Lectura del Evangelio',
         texto: 'Nos ponemos todos de pie. Del Santo Evangelio según San Lucas:\n\n“El primer día de la semana, muy temprano, fueron al sepulcro con los perfumes que habían preparado. Pero se encontraron con que la piedra que cerraba el sepulcro había sido removida, y al entrar, no encontraron el cuerpo del Señor Jesús.\n\nNo sabían qué pensar, pero, en ese momento, vieron a su lado dos hombres con ropas fulgurantes. Se asustaron mucho y no se atrevían a levantar los ojos del suelo.\n\nEllos les dijeron: ¿Por qué buscan entre los muertos al que vive? No está aquí. Resucitó. Acuérdense de lo que les dijo cuando todavía estaba en Galilea. El Hijo del Hombre debe ser entregado en manos de los pecadores y ser crucificado y resucitado al tercer día. Ellas entonces recordaron las palabras de Jesús”.\n\n(Lucas 24, 1-8)\n\nPalabra del Señor.'
       });
 
-      // 3. Súplicas de Salvación [6, 11, 12]
       flujo.push({
         tipo: 'suplicas-finales',
         titulo: 'Invocaciones de Salvación',
@@ -146,21 +143,18 @@ Alpine.data('rosarioApp', () => ({
         respuestaComun: 'Dale Señor, el eterno descanso.'
       });
 
-      // 4. Encomendación [6, 13]
       flujo.push({
         tipo: 'texto',
         titulo: 'Encomendación',
         texto: 'Rezandero: Por Jesucristo, nuestro Salvador, que padeció por nosotros una muerte tan amarga y nos mereció la vida eterna, salva, Señor, a este(a) hijo(a) tuyo.\n\nTodos: Dale Señor, el eterno descanso.\n\nRezandero: Señor nuestro Jesucristo, salvador del mundo, te encomendamos a nuestro(a) hermano(a) N... por quien viniste al mundo con tanta misericordia; recíbelo(a) bondadoso en la alegría de tu Reino: pues aunque ciertamente cayó en el pecado, no negó al Padre ni al Hijo ni al Espíritu Santo, sino que creyó y adoró fielmente a Dios, creador de todas las cosas.\n\nTodos: Amén.'
       });
 
-      // 5. Salve de Encomendación [5, 13]
       flujo.push({
         tipo: 'texto',
         titulo: 'Dios te salve, Reina y Madre',
         texto: 'Recemos juntos: ¡Dios te salve! Reina y Madre, Madre de misericordia, vida, dulzura y esperanza nuestra. ¡Dios te salve! A ti clamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas. ¡Ea, pues, Señora, abogada nuestra! Vuelve a nosotros esos tus ojos misericordiosos y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre, ¡Oh clemente, Oh piadosa, Oh dulce siempre Virgen María! Ruega por nosotros, Santa Madre de Dios, para que seamos dignos de alcanzar las divinas gracias y promesas de Nuestro Señor Jesucristo. Amén.'
       });
 
-      // 6. Rito del Agua Bendita [5, 8]
       flujo.push({
         tipo: 'texto',
         titulo: 'Rito del Agua Bendita',
@@ -170,52 +164,14 @@ Alpine.data('rosarioApp', () => ({
 
     // --- INICIO COMÚN DEL ROSARIO ---
     if (this.tipoRosario === 'difuntos') {
-      // Inicio estándar de difuntos [2]
-      flujo.push({
-        tipo: 'texto',
-        titulo: ORACIONES.inicio.titulo,
-        texto: ORACIONES.inicio.texto
-      });
-
-      // Acto de Contrición propio de difuntos [2, 14]
-      flujo.push({
-        tipo: 'texto',
-        titulo: ORACIONES.actoContricionDifuntos.titulo,
-        texto: ORACIONES.actoContricionDifuntos.texto
-      });
-
-      // Apertura de difuntos [14]
-      flujo.push({
-        tipo: 'invocacion',
-        titulo: ORACIONES.aperturaDifuntos.titulo,
-        lineas: ORACIONES.aperturaDifuntos.lineas
-      });
-
-      // Invocación por el Difunto [15]
-      flujo.push({
-        tipo: 'texto',
-        titulo: ORACIONES.ohDiosPerdonas.titulo,
-        texto: ORACIONES.ohDiosPerdonas.texto
-      });
+      flujo.push({ tipo: 'texto', titulo: ORACIONES.inicio.titulo, texto: ORACIONES.inicio.texto });
+      flujo.push({ tipo: 'texto', titulo: ORACIONES.actoContricionDifuntos.titulo, texto: ORACIONES.actoContricionDifuntos.texto });
+      flujo.push({ tipo: 'invocacion', titulo: ORACIONES.aperturaDifuntos.titulo, lineas: ORACIONES.aperturaDifuntos.lineas });
+      flujo.push({ tipo: 'texto', titulo: ORACIONES.ohDiosPerdonas.titulo, texto: ORACIONES.ohDiosPerdonas.texto });
     } else {
-      // Rosario Normal [1, 16]
-      flujo.push({
-        tipo: 'texto',
-        titulo: ORACIONES.inicio.titulo,
-        texto: ORACIONES.inicio.texto
-      });
-
-      flujo.push({
-        tipo: 'texto',
-        titulo: ORACIONES.actoContricion.titulo,
-        texto: ORACIONES.actoContricion.texto
-      });
-
-      flujo.push({
-        tipo: 'invocacion',
-        titulo: ORACIONES.apertura.titulo,
-        lineas: ORACIONES.apertura.lineas
-      });
+      flujo.push({ tipo: 'texto', titulo: ORACIONES.inicio.titulo, texto: ORACIONES.inicio.texto });
+      flujo.push({ tipo: 'texto', titulo: ORACIONES.actoContricion.titulo, texto: ORACIONES.actoContricion.texto });
+      flujo.push({ tipo: 'invocacion', titulo: ORACIONES.apertura.titulo, lineas: ORACIONES.apertura.lineas });
     }
 
     // --- MISTERIOS ---
@@ -230,38 +186,30 @@ Alpine.data('rosarioApp', () => ({
         texto: misterios.lista[i]
       });
 
-      if (esMisterioEspecial) {
-        // Estructura especial para los Misterios 2 y 4
-        flujo.push({
-          tipo: 'texto',
-          titulo: 'Padrenuestro (Inicios)',
-          texto: 'Rezandero: Padre Nuestro...\n\n(Las personas comienzan a rezar el Padre Nuestro).\n\nRezandero: Danos hoy nuestro pan de cada día; perdona nuestras ofensas como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén.'
-        });
-      } else {
-        // Estructura estándar para Misterios 1, 3 y 5
-        flujo.push({
-          tipo: 'texto',
-          titulo: ORACIONES.padrenuestro.titulo,
-          texto: ORACIONES.padrenuestro.texto
-        });
-      }
+      // Padre Nuestro común para todos los misterios
+      flujo.push({
+        tipo: 'texto',
+        titulo: ORACIONES.padrenuestro.titulo,
+        texto: ORACIONES.padrenuestro.texto
+      });
 
+      // Decenario de Avemarías (Invertido en Guía/Respuesta para los misterios 2 y 4)
       flujo.push({
         tipo: 'avemarias',
         titulo: 'Diez Avemarías',
-        guia: ORACIONES.avemaria.guia,
-        respuesta: ORACIONES.avemaria.respuesta
+        guia: esMisterioEspecial ? ORACIONES.avemaria.respuesta : ORACIONES.avemaria.guia,
+        respuesta: esMisterioEspecial ? ORACIONES.avemaria.guia : ORACIONES.avemaria.respuesta
       });
 
       if (esMisterioEspecial) {
-        // Gloria e intercambio especial para Misterios 2 y 4
+        // Conclusión especial en forma de salve para los misterios 2 y 4 (Aplica a ambos modos)
         flujo.push({
           tipo: 'texto',
           titulo: 'Gloria y Conclusión del Misterio',
-          texto: 'Rezandero: Gloria, Santa María, Madre de Dios, ruega por nosotros...\n\nAsamblea responde: Gloria al Padre, al Hijo y al Espíritu Santo...\n\nRezandero continúa: Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.'
+          texto: 'Rezandero: Gloria, Santa María, Madre de Dios, ruega por nosotros los pecadores ahora y en la hora de nuestra muerte. Amén.\n\nAsamblea responde: Gloria al Padre, al Hijo y al Espíritu Santo.\n\nRezandero continúa: Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.'
         });
       } else {
-        // Gloria estándar para Misterios 1, 3 y 5
+        // Gloria estándar para los misterios 1, 3 y 5
         flujo.push({
           tipo: 'texto',
           titulo: ORACIONES.gloria.titulo,
@@ -269,6 +217,7 @@ Alpine.data('rosarioApp', () => ({
         });
       }
 
+      // Jaculatorias según el tipo de rosario
       if (this.tipoRosario === 'difuntos') {
         flujo.push({
           tipo: 'jaculatorias-difuntos',
@@ -348,7 +297,6 @@ Alpine.data('rosarioApp', () => ({
         texto: CLOSING_DEVOTION.oracionSabanaDifuntos.texto
       });
 
-      // Letanías de Difuntos
       flujo.push({
         tipo: 'letanias-difuntos',
         titulo: 'Letanías de la Santísima Virgen (Difuntos)',
@@ -361,7 +309,6 @@ Alpine.data('rosarioApp', () => ({
         oracionFinalDifuntos: LETANIAS.oracionFinalDifuntos
       });
 
-      // Súplicas Finales (Conclusión) [17]
       flujo.push({
         tipo: 'suplicas-finales',
         titulo: CONCLUSION_DIFUNTOS.titulo,
@@ -370,7 +317,6 @@ Alpine.data('rosarioApp', () => ({
         respuestaComun: CONCLUSION_DIFUNTOS.respuestaComun
       });
 
-      // --- OPCIONAL: CEREMONIA DE LEVANTA CRUZ [4] ---
       if (this.incluirLevantaCruz) {
         flujo.push({
           tipo: 'texto',
@@ -421,7 +367,6 @@ Alpine.data('rosarioApp', () => ({
       }
 
     } else {
-      // Rosario Estándar
       flujo.push({
         tipo: 'guia-respuesta',
         titulo: CLOSING_DEVOTION.primeraSalve.titulo,
@@ -451,7 +396,6 @@ Alpine.data('rosarioApp', () => ({
         promesa: CLOSING_DEVOTION.cuartaSalve.promesa
       });
 
-      // Letanías Lauretanas Standard
       flujo.push({
         tipo: 'letanias',
         titulo: 'Letanías de la Santísima Virgen',
@@ -463,7 +407,6 @@ Alpine.data('rosarioApp', () => ({
         finales: LETANIAS.finales
       });
 
-      // Oración Final Standard
       flujo.push({
         tipo: 'oracion-final',
         titulo: 'Oración Final',
@@ -473,7 +416,6 @@ Alpine.data('rosarioApp', () => ({
       });
     }
 
-    // Jaculatoria y Fin comunes
     flujo.push({
       tipo: 'jaculatoria-final',
       titulo: ORACIONES.jaculatoriaFinal.titulo,
@@ -498,7 +440,6 @@ Alpine.data('rosarioApp', () => ({
     return this.pasos[this.pasoActualIndex] || {};
   },
 
-  // Hitos dinámicos para el menú de navegación rápida (izquierda)
   get hitos() {
     const listado = [];
     this.pasos.forEach((paso, index) => {
@@ -691,7 +632,7 @@ Alpine.data('rosarioApp', () => ({
       
       if (anteriorPaso.tipo === 'avemarias') {
         this.avemariaActual = 10;
-      } else if (anteriorPaso.tipo === 'letanias' || anteriorPaso.tipo === 'letanias-difuntos') {
+      } else if (anteriorP_paso_tipo_es_letania(anteriorPaso)) {
         this.letaniaActualIndex = this.obtenerTotalLetaniasForStep(anteriorPaso) - 1;
       } else {
         this.avemariaActual = 0;
@@ -711,9 +652,13 @@ Alpine.data('rosarioApp', () => ({
   }
 }));
 
+// Función auxiliar para mantener la limpieza en el método anterior()
+function anteriorPaso_tipo_es_letania(paso) {
+  return paso.tipo === 'letanias' || paso.tipo === 'letanias-difuntos';
+}
+
 Alpine.start();
 
-// Registrar el Service Worker SOLO si no estamos en localhost (Entorno de producción)
 if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/rosario/sw.js')
@@ -721,7 +666,6 @@ if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
       .catch(err => console.error('[Service Worker] Falló el registro:', err));
   });
 } else if ('serviceWorker' in navigator && window.location.hostname === 'localhost') {
-  // Desregistrar de forma activa cualquier service worker local viejo para limpiar desarrollo
   navigator.serviceWorker.getRegistrations().then(registrations => {
     for (let registration of registrations) {
       registration.unregister();
