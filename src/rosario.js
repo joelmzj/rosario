@@ -121,7 +121,7 @@ export const MISTERIOS = {
     nombre: "Misterios Dolorosos",
     dias: [ MARTES, VIERNES ],
     lista: [
-      "La Oración de Jesús in el huerto",
+      "La Oración de Jesús en el huerto",
       "La Flagelación del Señor",
       "La Coronación de espinas",
       "Jesús con la Cruz a cuestas, camino del Calvario",
