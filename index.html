@@ -72,6 +72,22 @@
           </div>
           
           <div class="flex items-center gap-2">
+            <!-- Selector manual de día de la semana -->
+            <select 
+              x-model="diaForzado" 
+              title="Ajustar día de la semana si la fecha del celular es incorrecta"
+              class="bg-slate-900 border border-slate-800 text-slate-400 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-amber-500 transition-colors">
+              <option :value="null">📅 Día automático (Hoy)</option>
+              <option value="1">Lunes (Gozosos)</option>
+              <option value="2">Martes (Dolorosos)</option>
+              <option value="3">Miércoles (Gloriosos)</option>
+              <option value="4">Jueves (Luminosos)</option>
+              <option value="5">Viernes (Dolorosos)</option>
+              <option value="6">Sábado (Gozosos)</option>
+              <option value="0">Domingo (Gloriosos)</option>
+            </select>
+
+            <!-- Selector de Tipo de Rosario -->
             <select 
               x-model="tipoRosario" 
               class="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-amber-500">

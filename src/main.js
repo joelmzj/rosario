@@ -1,6 +1,6 @@
 import './style.css';
 import Alpine from 'alpinejs';
-import { ORACIONES, MISTERIOS, LETANIAS, CLOSING_DEVOTION, CONCLUSION_DIFUNTOS, LEVANTA_CRUZ, obtenerMisterioDelDia } from './rosario.js';
+import { ORACIONES, MISTERIOS, LETANIAS, CLOSING_DEVOTION, CONCLUSION_DIFUNTOS, LEVANTA_CRUZ } from './rosario.js';
 
 window.Alpine = Alpine;
 
@@ -11,10 +11,11 @@ Alpine.data('rosarioApp', () => ({
   letaniaActualIndex: 0,
   misterioDelDia: null,
 
-  // Reactividad del Rosario Dual (con persistencia en localStorage)
+  // Reactividad del Rosario Dual y Selección Manual de Día (con persistencia en localStorage)
   tipoRosario: localStorage.getItem('rosario_tipo') || 'normal',
   nombreDifunto: localStorage.getItem('rosario_nombre') || '',
   generoDifunto: localStorage.getItem('rosario_genero') || 'hermano', // 'hermano' o 'hermana'
+  diaForzado: localStorage.getItem('rosario_dia_forzado') !== null ? (localStorage.getItem('rosario_dia_forzado') === 'null' ? null : localStorage.getItem('rosario_dia_forzado')) : null,
 
   // Interruptores modulares para el Rosario de Difuntos
   incluirRitosIniciales: localStorage.getItem('rosario_ritos') === 'true',
@@ -24,10 +25,10 @@ Alpine.data('rosarioApp', () => ({
   menuAbierto: false,
 
   init() {
-    this.misterioDelDia = obtenerMisterioDelDia();
+    this.misterioDelDia = this.obtenerMisterioSegunDia();
     this.generarFlujo();
 
-    // Observadores reactivos para guardar en localStorage y regenerar flujo al cambiar estados en vivo
+    // Observadores reactivos para guardar en localStorage y regenerar flujo en vivo
     this.$watch('tipoRosario', (val) => {
       localStorage.setItem('rosario_tipo', val);
       this.generarFlujo();
@@ -41,6 +42,11 @@ Alpine.data('rosarioApp', () => ({
       localStorage.setItem('rosario_nombre', val);
       this.generarFlujo();
     });
+    this.$watch('diaForzado', (val) => {
+      localStorage.setItem('rosario_dia_forzado', val);
+      this.misterioDelDia = this.obtenerMisterioSegunDia();
+      this.generarFlujo();
+    });
     this.$watch('incluirRitosIniciales', (val) => {
       localStorage.setItem('rosario_ritos', val);
       this.generarFlujo();
@@ -51,6 +57,16 @@ Alpine.data('rosarioApp', () => ({
       this.generarFlujo();
       this.reiniciar();
     });
+  },
+
+  obtenerMisterioSegunDia() {
+    // Si el usuario seleccionó un día manual, usamos ese; si no, el del dispositivo (0 a 6)
+    const diaSemana = this.diaForzado !== null && this.diaForzado !== 'null' ? parseInt(this.diaForzado) : new Date().getDay();
+    
+    if (MISTERIOS.gozosos.dias.includes(diaSemana)) return MISTERIOS.gozosos;
+    if (MISTERIOS.dolorosos.dias.includes(diaSemana)) return MISTERIOS.dolorosos;
+    if (MISTERIOS.gloriosos.dias.includes(diaSemana)) return MISTERIOS.gloriosos;
+    return MISTERIOS.luminosos;
   },
 
   limpiarNombre() {
@@ -107,7 +123,7 @@ Alpine.data('rosarioApp', () => ({
       // 7. Comodín de nombre residual
       t = t.replace(/N[…\.]+/g, nombre);
     } else {
-      // Limpieza de comodines para el modo Estándar (se omiten las cláusulas de difuntos)
+      // Limpieza de comodines para el modo Estándar
       t = t.replace(/ROSARIO_DIFUNTOS_SUFIJO/g, '');
       t = t.replace(/ROSARIO_DIFUNTOS_RESPUESTA/g, '');
       t = t.replace(/ROSARIO_DIFUNTOS_PETICION/g, '');
@@ -118,7 +134,6 @@ Alpine.data('rosarioApp', () => ({
       t = t.replace(/ROSARIO_DIFUNTOS_ESCUDALO/g, 'nos');
       t = t.replace(/ROSARIO_DIFUNTOS_TEN_PIEDAD/g, ' de nosotros');
 
-      // Formato neutro/masculino litúrgico para rosario estándar
       t = t.replace(/nuestro\(a\)\s+hermano\(a\)/g, 'nuestro hermano');
       t = t.replace(/hermano\(a\)/g, 'hermano');
       t = t.replace(/siervo\(a\)/g, 'siervo');
@@ -128,7 +143,6 @@ Alpine.data('rosarioApp', () => ({
       t = t.replace(/N[…\.]+/g, 'N...');
     }
 
-    // Retornamos con saltos HTML válidos
     return t.replace(/\n/g, '<br>');
   },
 
@@ -183,7 +197,7 @@ Alpine.data('rosarioApp', () => ({
       });
     }
 
-    // --- INICIO COMÚN DEL ROSARIO (Ya unificado) ---
+    // --- INICIO COMÚN DEL ROSARIO ---
     flujo.push({ tipo: 'texto', titulo: ORACIONES.inicio.titulo, texto: ORACIONES.inicio.texto });
     flujo.push({ tipo: 'texto', titulo: ORACIONES.actoContricion.titulo, texto: ORACIONES.actoContricion.texto });
     flujo.push({ tipo: 'invocacion', titulo: ORACIONES.apertura.titulo, lineas: ORACIONES.apertura.lineas });
@@ -193,7 +207,7 @@ Alpine.data('rosarioApp', () => ({
     }
 
     // --- MISTERIOS ---
-    const misterios = this.misterioDelDia || obtenerMisterioDelDia();
+    const misterios = this.misterioDelDia || this.obtenerMisterioSegunDia();
     for (let i = 0; i < 5; i++) {
       const numeroMisterio = i + 1;
       const esMisterioEspecial = (numeroMisterio === 2 || numeroMisterio === 4);
@@ -204,14 +218,12 @@ Alpine.data('rosarioApp', () => ({
         texto: misterios.lista[i]
       });
 
-      // Padre Nuestro común para todos los misterios
       flujo.push({
         tipo: 'texto',
         titulo: ORACIONES.padrenuestro.titulo,
         texto: ORACIONES.padrenuestro.texto
       });
 
-      // Decenario de Avemarías (Invertido en Guía/Respuesta para los misterios 2 y 4)
       flujo.push({
         tipo: 'avemarias',
         titulo: 'Diez Avemarías',
@@ -220,14 +232,12 @@ Alpine.data('rosarioApp', () => ({
       });
 
       if (esMisterioEspecial) {
-        // Conclusión especial en forma de salve para los misterios 2 y 4 (Aplica a ambos modos)
         flujo.push({
           tipo: 'texto',
           titulo: 'Gloria y Conclusión del Misterio',
           texto: 'Rezandero: Gloria, Santa María, Madre de Dios, ruega por nosotros los pecadores ahora y en la hora de nuestra muerte. Amén.\n\nAsamblea responde: Gloria al Padre, al Hijo y al Espíritu Santo.\n\nRezandero continúa: Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.'
         });
       } else {
-        // Gloria estándar para los misterios 1, 3 y 5
         flujo.push({
           tipo: 'texto',
           titulo: ORACIONES.gloria.titulo,
@@ -235,7 +245,6 @@ Alpine.data('rosarioApp', () => ({
         });
       }
 
-      // Jaculatorias según el tipo de rosario
       if (this.tipoRosario === 'difuntos') {
         flujo.push({
           tipo: 'jaculatorias-difuntos',
